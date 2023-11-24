@@ -33,16 +33,16 @@ const Ourmenu = () => {
             <MenuCategory items={offered}></MenuCategory>
 
             {/* dessert */}
-         <h1 className="border-b-2 w-3/12 mx-auto mb-10 text-center">ORDER YOUR FAVOURITE FOOD</h1>
-         <MenuCategory items={dessert} title={"DESSERTS"} description={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."} img={desertimg} ></MenuCategory>
+       
+         <MenuCategory items={dessert} title={"dessert"} description={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."} img={desertimg} ></MenuCategory>
        {/* pizza */}
-         <h1 className="border-b-2 w-3/12 mx-auto mb-10 text-center">ORDER YOUR FAVOURITE FOOD</h1>
+         
          <MenuCategory items={pizza} title={"pizza"} description=" Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." img={pizzatimg} ></MenuCategory>
        {/* salad */}
-         <h1 className="border-b-2 w-3/12 mx-auto mb-10 text-center">ORDER YOUR FAVOURITE FOOD</h1>
+       
          <MenuCategory items={salad} title={"salad"} description="Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." img={saladimg} ></MenuCategory>
        {/* soup*/}
-         <h1 className="border-b-2 w-3/12 mx-auto mb-10 text-center">ORDER YOUR FAVOURITE FOOD</h1>
+        
          <MenuCategory items={soup} title={"soup"} description="Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." img={soupimg} ></MenuCategory>
 
 

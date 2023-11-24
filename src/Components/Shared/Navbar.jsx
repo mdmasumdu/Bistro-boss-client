@@ -8,7 +8,10 @@ const Navbar = () => {
     <NavLink to="/">CONTACT US</NavLink>
     <NavLink to="/">DASHBOARD</NavLink>
     <NavLink to="/ourmenu">OUR MENU</NavLink>
-    <NavLink to="/">OUR SHOP</NavLink>
+    
+    <NavLink to={`/orderfood/${"salad"}`}>OUR SHOP</NavLink>
+    <NavLink to="/login">LOGIN</NavLink>
+    <NavLink to="/register">REGISTER</NavLink>
     
     </>
     return (

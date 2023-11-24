@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import Cover from "../Shared/Cover";
 import Menu from "../Shared/Sectiontitle/Menu";
+import { Link } from 'react-router-dom';
 
 
 const MenuCategory = ({title,img,items,description}) => {
@@ -16,6 +17,15 @@ const MenuCategory = ({title,img,items,description}) => {
                 items.map(menu=><Menu key={menu._id} menu={menu}></Menu>)
              }
            </div>
+
+           <div>
+           {
+                title &&  <Link to={`/orderfood/${title}`}><button className="border-b-2 w-3/12 mx-auto mb-10 text-center">ORDER NOW</button></Link>
+               
+              }
+           </div>
+            
+               
             
         </div>
     );
