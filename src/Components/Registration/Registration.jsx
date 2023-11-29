@@ -1,11 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
-// import useAuth from "../Hooks/useAuth";
+
 import Swal from 'sweetalert2'
+import useAuth from '../../Hooks/useAuth';
+import { Link, useNavigate } from 'react-router-dom';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+
+
 
 
 const Register = () => {
-//   const {createuser,updateuser,logout} =useAuth();
-//   const navigate =useNavigate();
+  const {createuser,update,logout} =useAuth();
+  const navigate =useNavigate();
+const axiosSecure =useAxiosSecure();
 
   const registerhandler =(e)=>{
     e.preventDefault();
@@ -15,6 +20,10 @@ const Register = () => {
     const password =form.password.value;
     const photoURL =form.photoURL.value;
     console.log(name,email,password,photoURL)
+    const userinfo ={
+      name,
+      email
+    }
 
     if(password.length < 6){
       return  Swal.fire({
@@ -33,37 +42,42 @@ const Register = () => {
         confirmButtonText: 'Cool'
       })
     }
-    // createuser(email,password)
-    // .then(res=>{
-    //   console.log(res.user)
-    //   if(res.user){
-    //     updateuser(name,photoURL)
-    //     .then(()=>{})
-    //     .catch(()=>{})
-    //     navigate("/login")
-    //     logout()
-    //     .then(()=>{})
-    //     .catch(()=>{})
-    //     Swal.fire({
-    //       title: 'succsess!',
-    //       text: 'succsesfully registerd,please login now',
-    //       icon: 'success',
-    //       confirmButtonText: 'Cool'
-    //     })
+    createuser(email,password)
+    .then(res=>{
+      console.log(res.user)
+      if(res.user){
+        update(name,photoURL)
+        .then(()=>{})
+        .catch(()=>{})
+        logout()
+        .then(()=>{})
+        .catch(()=>{})
+        axiosSecure.post("/users",userinfo)
+        .then(res=>{
+          if(res.data){
 
-
-
-    //   }
-    // })
-    // .catch(err=>
-    //   {console.error(err)
-    //     Swal.fire({
-    //       title: 'Error!',
-    //       text: `${err.message}`,
-    //       icon: 'error',
-    //       confirmButtonText: 'quit'
-    //     })
-    //   })
+            console.log(res.data.insertedId)
+            Swal.fire({
+              title: 'succsess!',
+              text: 'succsesfully registerd,please login now',
+              icon: 'success',
+              confirmButtonText: 'Cool'
+            })
+            navigate("/login")
+          }
+        })
+       
+      }
+    })
+    .catch(err=>
+      {console.error(err)
+        Swal.fire({
+          title: 'Error!',
+          text: `${err.message}`,
+          icon: 'error',
+          confirmButtonText: 'quit'
+        })
+      })
 
   }
     return (

@@ -1,18 +1,31 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+import { CiShoppingCart } from "react-icons/ci";
+import useCart from "../../Hooks/useCart";
 
 
 const Navbar = () => {
 
+  const {logout,user} =useAuth()
+  const [cart] =useCart();
+
+  const signout=()=>{
+    logout()
+    .then(()=>{})
+    .catch(()=>{})
+  }
+
     const links =<>
     <NavLink to="/">HOME</NavLink>
     <NavLink to="/">CONTACT US</NavLink>
-    <NavLink to="/">DASHBOARD</NavLink>
+    <NavLink to="/dashboard">DASHBOARD</NavLink>
     <NavLink to="/ourmenu">OUR MENU</NavLink>
     
     <NavLink to={`/orderfood/${"salad"}`}>OUR SHOP</NavLink>
-    <NavLink to="/login">LOGIN</NavLink>
-    <NavLink to="/register">REGISTER</NavLink>
-    
+    {
+      user ? "": <NavLink to="/register">REGISTER</NavLink>
+    }
+    <NavLink to={"/dashboard/cart"} className={"badge badge-secondary"}><span className="text-xl"><CiShoppingCart></CiShoppingCart></span>+{cart.length}</NavLink>
     </>
     return (
         <div className="navbar text-white fixed z-10 bg-opacity-30 bg-black">
@@ -39,7 +52,16 @@ const Navbar = () => {
            }
           </ul>
         </div>
-        <button className="btn ">SIGN OUT</button>
+       {
+        user ?       <div className="avatar">
+        <div className="w-12 m-2">
+          <img src={user?.photoURL} />
+        </div>
+      </div> : ""
+       }
+      {
+        user ?<button className="btn " onClick={signout}>SIGN OUT</button> :<NavLink className={"font-bold menu menu-horizontal"} to="/login">LOGIN</NavLink>
+      }  
         </div>
       </div>
     );

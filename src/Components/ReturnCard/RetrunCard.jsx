@@ -4,7 +4,7 @@ import FoodCard from "../OrderFood/FoodCard/FoodCard";
 
 const RetrunCard = ({itema}) => {
     return (
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
              {
                 itema.map(dess=><FoodCard key={dess._id} items={dess}></FoodCard>)
              }

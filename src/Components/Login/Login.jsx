@@ -1,20 +1,24 @@
 import { Link ,useLocation,useNavigate} from "react-router-dom";
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
-// import useAuth from "../Hooks/useAuth";
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import Swal from 'sweetalert2'
 
 import loginimg from "../../assets/others/authentication1.png"
 import { useEffect, useRef, useState } from "react";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 
 const Login = () => {
 
    const location =useLocation();
+   console.log(location)
    const capcharef =useRef(); 
    const [disabled,setDisabled] =useState(true);
-  //  const navigate =useNavigate()
+   const navigate =useNavigate()
+   const axiosSecure =useAxiosSecure();
    console.log(location)
-// const { logingoogle,loginempass} =useAuth();
+const { logingoogle,signin} =useAuth();
+
 
 const handlecapchavalidate=(e)=>{
   e.preventDefault()
@@ -38,44 +42,52 @@ const loginwithemailpass =(e)=>{
 
   const email =e.target.email.value;
   const password =e.target.password.value;
-  // loginempass(email,password)
-  // .then(res=>{
-  //   if(res.user){
-  //     Swal.fire({
-  //       title: 'succsess!',
-  //       text: 'succsesfully logged in',
-  //       icon: 'success',
-  //       confirmButtonText: 'Cool'
+  signin(email,password)
+  .then(res=>{
+    if(res.user){
+      Swal.fire({
+        title: 'succsess!',
+        text: 'succsesfully logged in',
+        icon: 'success',
+        confirmButtonText: 'Cool'
 
-  //     })
-  //     location?.state ? navigate(`${location?.state}`) : navigate('/');
-  //   }
-  // })
-  // .catch(err=>{
-  //   Swal.fire({
-  //     title: 'Error!',
-  //     text: `${err.message}`,
-  //     icon: 'error',
-  //     confirmButtonText: 'quit'
-  //   })
-  // })
+      })
+      location?.state ? navigate(`${location?.state}`) : navigate('/');
+    }
+  })
+  .catch(err=>{
+    Swal.fire({
+      title: 'Error!',
+      text: `${err.message}`,
+      icon: 'error',
+      confirmButtonText: 'quit'
+    })
+  })
 
-// }
+}
    
-    // const googleloginhandle =()=>{
-    //     logingoogle()
-    //     .then(res=>{
-    //       console.log(res.user)
-    //       Swal.fire({
-    //         title: 'succsess!',
-    //         text: 'succsesfully logged in',
-    //         icon: 'success',
-    //         confirmButtonText: 'Cool'
+    const googleloginhandle =()=>{
+        logingoogle()
+        .then(res=>{
+          console.log(res.user)
+         const user={
+          email:res.user.email,
+          name:res.user.displayName
+         }
+          if(res.user){
+            axiosSecure.post("/users",user)
+            .then(res=>{console.log(res.data)})
+          }
+          Swal.fire({
+            title: 'succsess!',
+            text: 'succsesfully logged in',
+            icon: 'success',
+            confirmButtonText: 'Cool'
     
-    //       })
-    //       location?.state ? navigate(`${location?.state}`) : navigate('/');
-    //     })
-    //     .catch(err=>console.error(err))
+          })
+          location?.state ? navigate(`${location?.state}`) : navigate('/');
+        })
+        .catch(err=>console.error(err))
 
     }
     return (
@@ -119,11 +131,12 @@ const loginwithemailpass =(e)=>{
       <div className="p-5 text-center">
             New here? Please <Link className="text-blue-300" to="/register">Register</Link>
           </div>
-      {/* onClick={googleloginhandle} */}
+          
+      {/*  */}
       <div className="ml-5 flex flex-col items-center" >
 
         <p>Or login with google</p>
-        <img className="w-10" src={"https://imagizer.imageshack.com/img922/453/4Hxr5L.png"} alt="" />
+        <img onClick={googleloginhandle} className="w-10" src={"https://imagizer.imageshack.com/img922/453/4Hxr5L.png"} alt="" />
       </div>
 
     </div>
